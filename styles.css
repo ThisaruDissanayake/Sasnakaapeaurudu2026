@@ -720,3 +720,98 @@ tbody tr:hover {
     font-size: 1.7rem;
   }
 }
+
+/* Global responsive tweaks for tablets & phones */
+@media (max-width: 900px) {
+  .container {
+    margin-top: 1rem;
+    padding-inline: 0.75rem;
+  }
+
+  .brand-logo,
+  .brand-logo-right {
+    width: 96px;
+    height: 96px;
+  }
+
+  h1 {
+    font-size: 2rem;
+  }
+}
+
+@media (max-width: 720px) {
+  .top-bar {
+    flex-wrap: wrap;
+    align-items: flex-start;
+    gap: 0.5rem;
+  }
+
+  .logo-title {
+    width: 100%;
+  }
+
+  .auth-area {
+    width: 100%;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    row-gap: 0.35rem;
+  }
+
+  .event-name {
+    font-size: 1rem;
+  }
+
+  .event-subtitle {
+    font-size: 0.8rem;
+  }
+}
+
+@media (max-width: 600px) {
+  body {
+    background-attachment: scroll;
+  }
+
+  .top-bar {
+    padding-inline: 0.75rem;
+  }
+
+  .brand-logo,
+  .brand-logo-right {
+    width: 72px;
+    height: 72px;
+  }
+
+  .nav-links {
+    order: 3;
+    width: 100%;
+    justify-content: center;
+    flex-wrap: wrap;
+  }
+
+  .nav-btn {
+    font-size: 0.9rem;
+    padding-inline: 0.7rem;
+  }
+
+  h1 {
+    font-size: 1.6rem;
+  }
+
+  h2 {
+    font-size: 1.1rem;
+  }
+
+  .judges-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .judge-photo {
+    width: 120px;
+    height: 120px;
+  }
+
+  .avatar-large {
+    width: 150px;
+    height: 150px;
+  }
+}
