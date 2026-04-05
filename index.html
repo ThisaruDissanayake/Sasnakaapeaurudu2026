@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Sasnaka Ape Aurudu 2026 - Sasnaka Sansada National Aurudu Kumara saha Aurudu Kumariya 2026</title>
+    <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+    <!-- Landing Overlay -->
+    <div id="landingOverlay" class="landing-overlay">
+        <video class="landing-video" src="Images/lodding.mp4" autoplay muted loop playsinline></video>
+        <div class="landing-inner">
+            <img src="Images/Logo.png" alt="Event Logo" class="landing-logo" />
+            <h1 class="landing-title">Sasnaka Ape Aurudu 2026</h1>
+            <p class="landing-subtitle">Sasnaka Sansada National Aurudu Kumara saha Aurudu Kumariya 2026</p>
+            <button id="enterSiteBtn" class="primary-btn landing-enter-btn">Enter Site</button>
+        </div>
+    </div>
+
+    <header class="top-bar">
+        <div class="logo-title">
+            <img src="Images/Logo.png" alt="Event Logo" class="brand-logo" />
+            <div>
+                <div class="event-name">Sasnaka Ape Aurudu 2026</div>
+                <div class="event-subtitle">Sasnaka Sansada National Aurudu Kumara saha Aurudu Kumariya 2026</div>
+            </div>
+        </div>
+        <nav class="nav-links">
+            <button class="nav-btn" data-view="home">Home</button>
+            <button class="nav-btn" data-view="leaderboards">Leaderboards</button>
+            <button class="nav-btn" data-view="admin" id="adminNav" disabled>Admin Panel</button>
+            <button class="nav-btn" data-view="judge" id="judgeNav" disabled>Judge Panel</button>
+        </nav>
+        <div class="auth-area">
+            <span id="currentUserLabel" class="user-label">Not logged in</span>
+            <button id="loginBtn" class="primary-btn">Login</button>
+            <button id="logoutBtn" class="secondary-btn" style="display:none;">Logout</button>
+            <img src="Images/SSlogo.png" alt="Sasnaka Logo" class="brand-logo brand-logo-right" />
+        </div>
+    </header>
+
+    <main class="container">
+        <!-- Home / Overview -->
+        <section id="homeView" class="view active">
+            <h1>Welcome to Sasnaka Ape Aurudu 2026</h1>
+<p>
+    Welcome to <strong>Sasnaka Ape Aurudu 2026</strong>, a vibrant celebration of Sri Lankan New Year traditions, unity, and cultural pride. This platform is designed to manage and showcase the exciting <strong>Aurudu Kumara</strong> and <strong>Aurudu Kumariya</strong> competitions for 2026.
+</p>
+<p>
+    Through this event, we aim to bring together participants from across the island to celebrate the spirit of Avurudu with traditional games, cultural performances, and joyful gatherings. Contestants will have the opportunity to express their talents, personality, and cultural values while competing for these prestigious titles.
+</p>
+<p>
+    Join us in celebrating tradition, building connections, and creating unforgettable memories as part of Sasnaka Ape Aurudu 2026!
+</p>
+            <section class="judges-section card">
+                <h2>Our Honorable Judges</h2>
+                <div class="judges-grid">
+                    <div class="judge-card">
+                        <img src="Images/Mr Hasitha Wijesundara.jpeg" alt="Mr Hasitha Wijesundara" class="judge-photo" />
+                        <div class="judge-name">Mr Hasitha Wijesundara</div>
+                    </div>
+                    <div class="judge-card">
+                        <img src="Images/Mis Jinadari Wijesundara.png" alt="Mis Jinadari Wijesundara" class="judge-photo" />
+                        <div class="judge-name">Mis Dilanjalee Wijesundara</div>
+                    </div>
+                    <div class="judge-card">
+                        <img src="Images/Mr Charith Weerasinghe.png" alt="Mr Charith Weerasinghe" class="judge-photo" />
+                        <div class="judge-name">Mr Charith Weerasinghe</div>
+                    </div>
+                    <div class="judge-card">
+                        <img src="Images/Mis Hiruni Tharaka.jpeg" alt="Mis Hiruni Tharaka" class="judge-photo" />
+                        <div class="judge-name">Mis Hiruni Tharaka</div>
+                    </div>
+                    <div class="judge-card">
+                        <img src="Images/Ms Pavithra Dulmini.png" alt="Ms Pavithra Dulmini" class="judge-photo" />
+                        <div class="judge-name">Ms Pavithra Dulmini</div>
+                    </div>
+                </div>
+            </section>
+
+            <div class="home-grid">
+                <div class="card">
+                    <h2>Sasnaka Sansada National Aurudu Kumara</h2>
+                    <p>Leaderboard for the Aurudu Kumara competition.</p>
+                    <div id="homeKumaraBoard"></div>
+                </div>
+                <div class="card">
+                    <h2>Sasnaka Sansada National Aurudu Kumariya</h2>
+                    <p>Leaderboard for the Aurudu Kumariya competition.</p>
+                    <div id="homeKumariyaBoard"></div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Leaderboards (one page with two sub sections) -->
+        <section id="leaderboardsView" class="view">
+            <h1>Leaderboards</h1>
+            <div class="subnav">
+                <button class="subnav-btn" data-lb="kumara">Sasnaka Sansada National Aurudu Kumara</button>
+                <button class="subnav-btn" data-lb="kumariya">Sasnaka Sansada National Aurudu Kumariya</button>
+                <button class="subnav-btn" data-lb="removed">Removed Contestants</button>
+            </div>
+
+            <div class="leaderboard-section" id="lbKumaraSection">
+                <h2>Sasnaka Sansada National Aurudu Kumara Leaderboard</h2>
+                <div id="kumaraLeaderboard"></div>
+            </div>
+
+            <div class="leaderboard-section" id="lbKumariyaSection" style="display:none;">
+                <h2>Sasnaka Sansada National Aurudu Kumariya Leaderboard</h2>
+                <div id="kumariyaLeaderboard"></div>
+            </div>
+
+            <div class="leaderboard-section" id="lbRemovedSection" style="display:none;">
+                <h2>Removed Contestants</h2>
+                <div id="removedList"></div>
+            </div>
+        </section>
+
+        <!-- Admin Panel -->
+        <section id="adminView" class="view">
+            <h1>Admin Panel</h1>
+            <p class="hint">Admin can add contestants for both competitions.</p>
+
+            <div id="superadminRequestsCard" class="card" style="display:none; margin-bottom:1rem;">
+                <h2>Change Requests</h2>
+                <div id="requestsList"></div>
+            </div>
+
+            <form id="contestantForm" class="card form-card">
+                <h2>Add New Contestant</h2>
+                <div class="form-row">
+                    <label for="category">Competition Category</label>
+                    <select id="category" required>
+                        <option value="kumara">Sasnaka Sansada National Aurudu Kumara</option>
+                        <option value="kumariya">Sasnaka Sansada National Aurudu Kumariya</option>
+                    </select>
+                </div>
+                <div class="form-row">
+                    <label for="name">Name</label>
+                    <input type="text" id="name" required />
+                </div>
+                <div class="form-row">
+                    <label for="district">District</label>
+                    <select id="district" required>
+                        <option value="" disabled selected>Select district</option>
+                        <option value="Colombo">Colombo</option>
+                        <option value="Gampaha">Gampaha</option>
+                        <option value="Kalutara">Kalutara</option>
+                        <option value="Kandy">Kandy</option>
+                        <option value="Matale">Matale</option>
+                        <option value="Nuwara Eliya">Nuwara Eliya</option>
+                        <option value="Galle">Galle</option>
+                        <option value="Matara">Matara</option>
+                        <option value="Hambantota">Hambantota</option>
+                        <option value="Jaffna">Jaffna</option>
+                        <option value="Kilinochchi">Kilinochchi</option>
+                        <option value="Mannar">Mannar</option>
+                        <option value="Vavuniya">Vavuniya</option>
+                        <option value="Mullaitivu">Mullaitivu</option>
+                        <option value="Batticaloa">Batticaloa</option>
+                        <option value="Ampara">Ampara</option>
+                        <option value="Trincomalee">Trincomalee</option>
+                        <option value="Kurunegala">Kurunegala</option>
+                        <option value="Puttalam">Puttalam</option>
+                        <option value="Anuradhapura">Anuradhapura</option>
+                        <option value="Polonnaruwa">Polonnaruwa</option>
+                        <option value="Badulla">Badulla</option>
+                        <option value="Monaragala">Monaragala</option>
+                        <option value="Ratnapura">Ratnapura</option>
+                        <option value="Kegalle">Kegalle</option>
+                    </select>
+                </div>
+                <div class="form-row">
+                    <label for="age">Age</label>
+                    <input type="number" id="age" min="0" required />
+                </div>
+                <div class="form-row">
+                    <label for="photo">Photo</label>
+                    <input type="file" id="photo" accept="image/*" required />
+                </div>
+                <button type="submit" class="primary-btn">Add Contestant</button>
+            </form>
+
+            <div class="admin-lists">
+                <div class="card">
+                    <h2>All Sasnaka Sansada National Aurudu Kumara Contestants</h2>
+                    <div id="adminKumaraList"></div>
+                </div>
+                <div class="card">
+                    <h2>All Sasnaka Sansada National Aurudu Kumariya Contestants</h2>
+                    <div id="adminKumariyaList"></div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Judge Panel (one page with two sub sections) -->
+        <section id="judgeView" class="view">
+            <h1>Judge Panel</h1>
+            <p class="hint">Each judge gives marks from 0 to 10 for every contestant.</p>
+
+            <div class="subnav">
+                <button class="subnav-btn" data-judge-tab="kumara">Sasnaka Sansada National Aurudu Kumara</button>
+                <button class="subnav-btn" data-judge-tab="kumariya">Sasnaka Sansada National Aurudu Kumariya</button>
+            </div>
+
+            <div class="card" id="judgeKumaraSection">
+                <div id="judgeKumaraList"></div>
+            </div>
+
+            <div class="card" id="judgeKumariyaSection" style="display:none;">
+                <div id="judgeKumariyaList"></div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Login Modal -->
+    <div id="loginModal" class="modal hidden">
+        <div class="modal-backdrop"></div>
+        <div class="modal-content">
+            <h2>Login</h2>
+            <form id="loginForm">
+                <div class="form-row">
+                    <label for="loginUser">Username</label>
+                    <input id="loginUser" required />
+                </div>
+                <div class="form-row">
+                    <label for="loginPass">Password</label>
+                    <input type="password" id="loginPass" required />
+                </div>
+                <div class="modal-actions">
+                    <button type="submit" class="primary-btn">Login</button>
+                    <button type="button" class="secondary-btn" id="cancelLogin">Cancel</button>
+                </div>
+            </form>
+            <p id="loginError" class="error-text" style="display:none;"></p>
+        </div>
+    </div>
+
+    <!-- Image Preview Modal -->
+    <div id="imageModal" class="image-modal hidden">
+        <div class="image-modal-inner">
+            <button id="imageModalClose" class="image-modal-close">×</button>
+            <img id="imageModalImg" class="image-modal-img" alt="Preview" />
+        </div>
+    </div>
+
+    <div id="toastContainer" class="toast-container"></div>
+
+    <script src="app.js"></script>
+</body>
+</html>
