@@ -28,7 +28,7 @@
         </div>
         <nav class="nav-links">
             <button class="nav-btn" data-view="home">Home</button>
-            <button class="nav-btn" data-view="leaderboards">Leaderboards</button>
+            <button class="nav-btn" data-view="leaderboards" id="leaderboardsNav" disabled>Leaderboards</button>
             <button class="nav-btn" data-view="admin" id="adminNav" disabled>Admin Panel</button>
             <button class="nav-btn" data-view="judge" id="judgeNav" disabled>Judge Panel</button>
         </nav>
@@ -121,7 +121,7 @@
         <!-- Admin Panel -->
         <section id="adminView" class="view">
             <h1>Admin Panel</h1>
-            <p class="hint">Admin can add contestants for both competitions.</p>
+            <p class="hint">Admin can add contestants for both competitions, but cannot view the contestant lists.</p>
 
             <div id="superadminRequestsCard" class="card" style="display:none; margin-bottom:1rem;">
                 <h2>Change Requests</h2>

@@ -10,6 +10,14 @@ let contestants = [];
 let requests = [];
 let removed = [];
 
+function canViewContestants() {
+  return currentUser && (currentUser.role === 'superadmin' || currentUser.role === 'judge');
+}
+
+function canManageContestants() {
+  return currentUser && (currentUser.role === 'admin' || currentUser.role === 'superadmin');
+}
+
 // Helper to convert backend Mongo document to client object
 function mapContestant(doc) {
   return {
@@ -69,6 +77,7 @@ function updateAuthUI() {
   const loginBtn = $('loginBtn');
   const logoutBtn = $('logoutBtn');
   const adminNav = $('adminNav');
+  const leaderboardsNav = $('leaderboardsNav');
   const judgeNav = $('judgeNav');
 
   if (!currentUser) {
@@ -76,6 +85,7 @@ function updateAuthUI() {
     loginBtn.style.display = 'inline-flex';
     logoutBtn.style.display = 'none';
     adminNav.disabled = true;
+    if (leaderboardsNav) leaderboardsNav.disabled = true;
     judgeNav.disabled = true;
   } else {
     label.textContent = `${currentUser.username} (${currentUser.role})`;
@@ -84,12 +94,15 @@ function updateAuthUI() {
 
     if (currentUser.role === 'superadmin') {
       adminNav.disabled = false;
+      if (leaderboardsNav) leaderboardsNav.disabled = false;
       judgeNav.disabled = false;
     } else if (currentUser.role === 'admin') {
       adminNav.disabled = false;
+      if (leaderboardsNav) leaderboardsNav.disabled = true;
       judgeNav.disabled = true;
     } else if (currentUser.role === 'judge') {
       adminNav.disabled = true;
+      if (leaderboardsNav) leaderboardsNav.disabled = false;
       judgeNav.disabled = false;
     }
   }
@@ -108,7 +121,12 @@ async function handleLogin(username, password) {
     const data = await res.json();
     currentUser = { username: data.username, role: data.role };
     updateAuthUI();
-    renderAll();
+    if (canViewContestants()) {
+      await fetchContestantsFromServer();
+    } else {
+      contestants = [];
+      renderAll();
+    }
     showToast(`Logged in as ${data.username}`, 'success');
     if (data.role === 'superadmin') {
       fetchRequestsFromServer();
@@ -122,6 +140,7 @@ async function handleLogin(username, password) {
 
 function handleLogout() {
   currentUser = null;
+  contestants = [];
   updateAuthUI();
   renderAll();
   showToast('Logged out', 'info');
@@ -129,6 +148,12 @@ function handleLogout() {
 
 // ---- Contestant Management ----
 async function fetchContestantsFromServer() {
+  if (!canViewContestants()) {
+    contestants = [];
+    renderAll();
+    return;
+  }
+
   try {
     const res = await fetch('/api/contestants');
     if (!res.ok) throw new Error('Failed to fetch contestants');
@@ -261,6 +286,16 @@ function renderLeaderboards() {
   const homeKumaraBoard = $('homeKumaraBoard');
   const homeKumariyaBoard = $('homeKumariyaBoard');
 
+  const restrictedMessage = '<p class="hint">Contestants are visible to superadmins and judges only.</p>';
+
+  if (!canViewContestants()) {
+    if (kumaraLeaderboard) kumaraLeaderboard.innerHTML = restrictedMessage;
+    if (kumariyaLeaderboard) kumariyaLeaderboard.innerHTML = restrictedMessage;
+    if (homeKumaraBoard) homeKumaraBoard.innerHTML = restrictedMessage;
+    if (homeKumariyaBoard) homeKumariyaBoard.innerHTML = restrictedMessage;
+    return;
+  }
+
   const renderTable = (category) => {
     const filtered = contestants
       .filter((c) => c.category === category)
@@ -350,6 +385,15 @@ function renderRemoved() {
 function renderAdminLists() {
   const adminKumaraList = $('adminKumaraList');
   const adminKumariyaList = $('adminKumariyaList');
+
+  if (!adminKumaraList || !adminKumariyaList) return;
+
+  if (!canManageContestants()) {
+    const message = '<p class="hint">Only admin or superadmin can add contestants. Contestant lists are hidden for this role.</p>';
+    adminKumaraList.innerHTML = message;
+    adminKumariyaList.innerHTML = message;
+    return;
+  }
 
   const renderList = (category) => {
     const list = contestants.filter((c) => c.category === category);
@@ -520,6 +564,7 @@ function initNav() {
       if (!view) return;
       if (view === 'admin' && (!currentUser || (currentUser.role !== 'admin' && currentUser.role !== 'superadmin'))) return;
       if (view === 'judge' && (!currentUser || (currentUser.role !== 'judge' && currentUser.role !== 'superadmin'))) return;
+      if (view === 'leaderboards' && !canViewContestants()) return;
       showView(view);
     });
   });
@@ -644,7 +689,7 @@ function initAdminForm() {
   const form = $('contestantForm');
   form.addEventListener('submit', (e) => {
     e.preventDefault();
-    if (!currentUser || (currentUser.role !== 'admin' && currentUser.role !== 'superadmin')) {
+    if (!canManageContestants()) {
       alert('Only admin or superadmin can add contestants.');
       return;
     }
@@ -870,7 +915,6 @@ window.addEventListener('DOMContentLoaded', () => {
   initBasicProtections();
   initLanding();
   updateAuthUI();
-  fetchContestantsFromServer();
   if (currentUser && currentUser.role === 'superadmin') {
     fetchRequestsFromServer();
   }
